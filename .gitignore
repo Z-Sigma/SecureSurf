@@ -5,6 +5,8 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .pytest_cache/
+.env
+.env.example
 
 # Data and Artifacts (DVC managed)
 # We ignore the actual data but KEEP the .dvc configuration and metadata

@@ -6,9 +6,9 @@ services:
     container_name: mlflow_db
     restart: always
     environment:
-      POSTGRES_USER: mlflow
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mlflow
+      POSTGRES_USER: ${POSTGRES_USER:-mlflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-mlflow}
     ports:
       - "5432:5432"
     volumes:
@@ -22,8 +22,8 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: minio123
+      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID:-minio}
+      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY:-minio123}
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
@@ -35,13 +35,13 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - AWS_ACCESS_KEY_ID=minio
-      - AWS_SECRET_ACCESS_KEY=minio123
-      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-minio}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-minio123}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
       - MLFLOW_S3_ENDPOINT_URL=http://s3:9000
     command: >
       mlflow server
-      --backend-store-uri postgresql://mlflow:password@db:5432/mlflow
+      --backend-store-uri postgresql://${POSTGRES_USER:-mlflow}:${POSTGRES_PASSWORD:-password}@db:5432/${POSTGRES_DB:-mlflow}
       --default-artifact-root s3://mlflow/
       --host 0.0.0.0
     depends_on:

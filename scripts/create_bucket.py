@@ -1,12 +1,16 @@
 import boto3
 from botocore.client import Config
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 s3 = boto3.resource('s3',
-                    endpoint_url='http://localhost:9000',
-                    aws_access_key_id='minio',
-                    aws_secret_access_key='minio123',
+                    endpoint_url=os.getenv('MLFLOW_S3_ENDPOINT_URL', 'http://localhost:9000'),
+                    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID', 'minio'),
+                    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY', 'minio123'),
                     config=Config(signature_version='s3v4'),
-                    region_name='us-east-1')
+                    region_name=os.getenv('AWS_DEFAULT_REGION', 'us-east-1'))
 
 bucket_name = 'mlflow'
 

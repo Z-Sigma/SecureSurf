@@ -15,14 +15,15 @@ RAW_DATA_PATH = BASE_DIR / "malicious_phish.csv"
 MODELS_DIR = BASE_DIR / "models"
 os.makedirs(MODELS_DIR, exist_ok=True)
 
-# MLflow Config
-MLFLOW_TRACKING_URI = "http://localhost:5000"
-
 # S3 / MinIO Config (for MLflow Artifacts)
-S3_ENDPOINT_URL = "http://localhost:9000"
-AWS_ACCESS_KEY_ID = "minio"
-AWS_SECRET_ACCESS_KEY = "minio123"
-AWS_DEFAULT_REGION = "us-east-1"
+from dotenv import load_dotenv
+load_dotenv()
+
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
+S3_ENDPOINT_URL = os.getenv("MLFLOW_S3_ENDPOINT_URL", "http://localhost:9000")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "minio")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "minio123")
+AWS_DEFAULT_REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
 
 # Feature lists
 FEATURES = [

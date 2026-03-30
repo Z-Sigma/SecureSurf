@@ -9,6 +9,9 @@ from src.config import REVERSE_LABEL_MAP, MLFLOW_TRACKING_URI, S3_ENDPOINT_URL, 
 from src.logger import get_logger
 
 # Set environment variables for MLflow/S3 access
+from dotenv import load_dotenv
+load_dotenv()
+
 os.environ["MLFLOW_S3_ENDPOINT_URL"] = S3_ENDPOINT_URL
 os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
 os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
@@ -35,8 +38,9 @@ def predict_url(url, run_id):
         return None
 
     # 3. Load model from MLflow
+    logger.info(f"Connecting to MLflow Tracking Server at: {MLFLOW_TRACKING_URI}")
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-    client = mlflow.tracking.MlflowClient()
+    client = mlflow.tracking.MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
     
     try:
         # Automatically find the first artifact that looks like a model
@@ -55,6 +59,8 @@ def predict_url(url, run_id):
         logger.info(f"Model loaded successfully from {local_path}")
     except Exception as e:
         logger.error(f"Error loading model from MLflow: {e}")
+        import traceback
+        logger.error(traceback.format_exc())
         logger.info("Tip: Ensure the MLflow server is running and the Run ID is correct.")
         return None
 

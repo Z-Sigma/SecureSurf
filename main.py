@@ -1,8 +1,13 @@
+import mlflow
 from src.data_ingestion import load_data
 from src.preprocessing import clean_data
 from src.feature_engineering import extract_features
 from src.model_trainer import train_and_log_models
+from src.config import MLFLOW_TRACKING_URI
 from src.logger import get_logger
+
+# Enforce tracking URI at the start
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
 logger = get_logger(__name__)
 
@@ -11,6 +16,9 @@ def run_pipeline():
     Run the complete MLOps pipeline for all models.
     """
     try:
+        # Ensure tracking URI is set
+        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+        logger.info("Initializing MLflow tracking...")
         logger.info("Starting Malicious URL Detection Pipeline")
         
         # 1. Ingestion
