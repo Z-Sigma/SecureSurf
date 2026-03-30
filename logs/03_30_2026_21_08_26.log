@@ -1,0 +1,35 @@
+[2026-03-30 21:08:29,154] __main__ - INFO - Starting Malicious URL Detection Pipeline
+[2026-03-30 21:08:29,155] src.data_ingestion - INFO - Loading data from C:\Users\Ajit\Desktop\open_mlops_1\malicious_phish.csv\malicious_phish.csv
+[2026-03-30 21:08:30,114] src.data_ingestion - INFO - Successfully loaded data with shape: (651191, 2)
+[2026-03-30 21:08:30,114] src.preprocessing - INFO - Cleaning data...
+[2026-03-30 21:08:30,739] src.preprocessing - INFO - Data cleaning complete.
+[2026-03-30 21:08:30,812] src.feature_engineering - INFO - Extracting features...
+[2026-03-30 21:08:36,430] src.feature_engineering - INFO - Feature extraction complete.
+[2026-03-30 21:08:36,430] src.model_trainer - INFO - Initializing MLflow tracking...
+[2026-03-30 21:08:36,526] src.model_trainer - INFO - Setting up MLflow experiment for model: DecisionTree
+[2026-03-30 21:08:37,343] src.model_trainer - INFO - Training DecisionTree...
+[2026-03-30 21:08:37,856] src.model_trainer - INFO - DecisionTree Metrics: {'accuracy': 0.8961, 'precision': 0.8900197521501181, 'recall': 0.8961, 'f1_score': 0.8913780102090039}
+[2026-03-30 21:08:50,172] botocore.credentials - INFO - Found credentials in environment variables.
+[2026-03-30 21:08:51,496] src.model_trainer - INFO - Setting up MLflow experiment for model: RandomForest
+[2026-03-30 21:08:51,747] src.model_trainer - INFO - Training RandomForest...
+[2026-03-30 21:09:02,173] src.model_trainer - INFO - RandomForest Metrics: {'accuracy': 0.90995, 'precision': 0.9051237940425586, 'recall': 0.90995, 'f1_score': 0.9049759030567278}
+[2026-03-30 21:09:11,342] src.model_trainer - INFO - Setting up MLflow experiment for model: AdaBoost
+[2026-03-30 21:09:11,549] src.model_trainer - INFO - Training AdaBoost...
+[2026-03-30 21:09:14,215] src.model_trainer - INFO - AdaBoost Metrics: {'accuracy': 0.78485, 'precision': 0.736063918482976, 'recall': 0.78485, 'f1_score': 0.736088266528906}
+[2026-03-30 21:09:21,856] src.model_trainer - INFO - Setting up MLflow experiment for model: KNeighbors
+[2026-03-30 21:09:22,109] src.model_trainer - INFO - Training KNeighbors...
+[2026-03-30 21:10:02,030] src.model_trainer - INFO - KNeighbors Metrics: {'accuracy': 0.8678, 'precision': 0.8593129948615362, 'recall': 0.8678, 'f1_score': 0.8598417080504905}
+[2026-03-30 21:10:13,342] src.model_trainer - INFO - Setting up MLflow experiment for model: ExtraTrees
+[2026-03-30 21:10:13,564] src.model_trainer - INFO - Training ExtraTrees...
+[2026-03-30 21:10:21,395] src.model_trainer - INFO - ExtraTrees Metrics: {'accuracy': 0.90925, 'precision': 0.9044822573924924, 'recall': 0.90925, 'f1_score': 0.9036203295634149}
+[2026-03-30 21:10:31,490] src.model_trainer - INFO - Setting up MLflow experiment for model: GaussianNB
+[2026-03-30 21:10:31,688] src.model_trainer - INFO - Training GaussianNB...
+[2026-03-30 21:10:31,800] src.model_trainer - INFO - GaussianNB Metrics: {'accuracy': 0.791, 'precision': 0.7752762724606799, 'recall': 0.791, 'f1_score': 0.7386836531941918}
+[2026-03-30 21:10:39,430] src.model_trainer - INFO - All models trained and logged.
+[2026-03-30 21:10:39,443] __main__ - INFO - Pipeline finished. Trained 6 models.
+[2026-03-30 21:10:39,444] __main__ - INFO - Model: DecisionTree, Accuracy: 0.8961
+[2026-03-30 21:10:39,445] __main__ - INFO - Model: RandomForest, Accuracy: 0.90995
+[2026-03-30 21:10:39,445] __main__ - INFO - Model: AdaBoost, Accuracy: 0.78485
+[2026-03-30 21:10:39,446] __main__ - INFO - Model: KNeighbors, Accuracy: 0.8678
+[2026-03-30 21:10:39,446] __main__ - INFO - Model: ExtraTrees, Accuracy: 0.90925
+[2026-03-30 21:10:39,446] __main__ - INFO - Model: GaussianNB, Accuracy: 0.791

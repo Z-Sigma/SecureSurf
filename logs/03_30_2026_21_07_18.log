@@ -1,0 +1,13 @@
+[2026-03-30 21:07:21,211] __main__ - INFO - Starting Malicious URL Detection Pipeline
+[2026-03-30 21:07:21,212] src.data_ingestion - INFO - Loading data from C:\Users\Ajit\Desktop\open_mlops_1\malicious_phish.csv\malicious_phish.csv
+[2026-03-30 21:07:22,151] src.data_ingestion - INFO - Successfully loaded data with shape: (651191, 2)
+[2026-03-30 21:07:22,152] src.preprocessing - INFO - Cleaning data...
+[2026-03-30 21:07:22,724] src.preprocessing - INFO - Data cleaning complete.
+[2026-03-30 21:07:22,789] src.feature_engineering - INFO - Extracting features...
+[2026-03-30 21:07:27,734] src.feature_engineering - INFO - Feature extraction complete.
+[2026-03-30 21:07:27,735] src.model_trainer - INFO - Initializing MLflow tracking...
+[2026-03-30 21:07:27,777] src.model_trainer - INFO - Setting up MLflow experiment for model: DecisionTree
+[2026-03-30 21:07:28,455] src.model_trainer - INFO - Training DecisionTree...
+[2026-03-30 21:07:29,081] src.model_trainer - INFO - DecisionTree Metrics: {'accuracy': 0.8961, 'precision': 0.8900197521501181, 'recall': 0.8961, 'f1_score': 0.8913780102090039}
+[2026-03-30 21:07:40,263] botocore.credentials - INFO - Found credentials in environment variables.
+[2026-03-30 21:07:41,153] __main__ - ERROR - Pipeline failed: Failed to upload C:\Users\Ajit\AppData\Local\Temp\tmp28b1rsgq\model\conda.yaml to mlflow/1/models/m-909ea61ed6554ebf86ddcd1dacdbb25a/artifacts/conda.yaml: An error occurred (NoSuchBucket) when calling the PutObject operation: The specified bucket does not exist
