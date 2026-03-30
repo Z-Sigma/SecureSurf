@@ -1,0 +1,27 @@
+# Virtual Environment
+myenv/
+venv/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Logging
+logs/
+*.log
+
+# Data (DVC tracks these)
+/data/
+/delivery_data/
+!/delivery_data.dvc
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# OS
+.DS_Store
+Thumbs.db

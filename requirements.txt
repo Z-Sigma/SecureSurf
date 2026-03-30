@@ -1,0 +1,29 @@
+# Data & Versioning
+dvc[s3]
+boto3
+
+# Feature Store
+feast
+redis
+
+# Experiment Tracking
+mlflow
+psycopg2-binary
+
+# Training
+scikit-learn
+xgboost
+lightgbm
+catboost
+optuna
+pandas
+numpy
+geopy
+
+# Serving
+fastapi
+uvicorn
+prometheus_client
+
+# Monitoring
+evidently
