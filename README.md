@@ -1,6 +1,6 @@
 # 🛡️ SecureSurf: Malicious URL Detection Pipeline
 
-SecureSurf is a production-grade MLOps pipeline designed to detect malicious URLs (Phishing, Malware, Defacement, Benign) with high accuracy and full reproducibility. This project transitions from a research notebook to a robust, containerized infrastructure.
+SecureSurf is a production-grade MLOps pipeline designed to detect malicious URLs (Phishing, Malware, Defacement, Benign) with high accuracy and full reproducibility. This project is **fully Cloud-Agnostic**, meaning it runs anywhere without being locked into a single provider.
 
 ---
 
@@ -16,11 +16,20 @@ graph TD
     F -->|Result| G[Human-Readable Label]
 ```
 
-### Key Components:
+### 🌍 The Open-Source Advantage
+Instead of using expensive and proprietary cloud services, this project uses a powerful **Open-Source Stack**:
+- **MinIO (vs AWS S3)**: Provides an S3-compatible object store that runs entirely on your infrastructure.
+- **PostgreSQL (vs AWS RDS)**: A robust, open-source relational database for all MLOps metadata.
+- **MLflow**: An open framework for the machine learning lifecycle.
+- **DVC (Data Version Control)**: Open-source version control for machine learning projects.
+
+---
+
+## 🏗️ Technical Features
 - **Data Versioning (DVC)**: Tracks the `malicious_phish.csv` dataset, storing artifacts in MinIO to ensure your data stays private and versioned.
 - **Experiment Tracking (MLflow)**: Automatically logs hyperparameters, accuracy metrics, feature importance, and model files for every training run.
 - **Infrastructure (Docker)**: A full stack including MLflow, MinIO, and PostgreSQL, all orchestrated with Docker Compose.
-- **CI/CD (GitHub Actions)**: Automated linting and unit testing to maintain code quality.
+- **Security & Sanitization**: Robust environment variable management via `.env` to keep your credentials safe and off GitHub.
 
 ---
 
@@ -29,28 +38,39 @@ graph TD
 ### 1. Requirements
 Ensure you have **Python 3.10+** and **Docker Desktop** installed.
 
-### 2. Infrastructure Setup
+### 2. Configure Environment Secrets
+Create a file named **`.env`** in the root directory and add your secure credentials (see `.env.example` for a template):
+```bash
+# MinIO & S3 Credentials
+AWS_ACCESS_KEY_ID=securesurf_admin
+AWS_SECRET_ACCESS_KEY=YourComplexPasswordHere
+MLFLOW_S3_ENDPOINT_URL=http://localhost:9000
+
+# Database Credentials
+POSTGRES_USER=mlflow_user
+POSTGRES_PASSWORD=YourComplexPasswordHere
+POSTGRES_DB=mlflow_db
+```
+
+### 3. Infrastructure Setup
 Spin up the local MLOps stack (MLflow, MinIO, Postgres):
 ```powershell
 docker-compose up -d
 ```
 
-### 3. Initialize Virtual Environment
+### 4. Initialize Virtual Environment
 ```powershell
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Setup Storage Buckets
-Ensure the necessary S3 buckets exist in MinIO:
+### 5. Setup Storage Buckets & Data
+Ensure the necessary S3 buckets exist in MinIO and pull the tracked data:
 ```powershell
 python scripts/create_bucket.py
-```
-
-### 5. Pull the Data
-Download the dataset tracked by DVC (from the remote artifact store):
-```powershell
+dvc remote modify minio access_key_id securesurf_admin --local
+dvc remote modify minio secret_access_key YourComplexPasswordHere --local
 dvc pull
 ```
 
@@ -83,6 +103,7 @@ python -m src.predict --url "google.com" --run_id "YOUR_RUN_ID"
 │   ├── model_trainer.py # MLflow training & logging engine
 │   └── predict.py       # Robust CLI inference tool
 ├── main.py              # Main pipeline orchestrator
+├── .env.example         # Template for environment variables
 ├── docker-compose.yml   # Infrastructure Definition
 └── requirements.txt     # Project dependencies
 ```
