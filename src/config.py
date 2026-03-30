@@ -9,8 +9,7 @@ from sklearn.naive_bayes import GaussianNB
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Data paths
-DATA_DIR = BASE_DIR / "malicious_phish.csv"
-RAW_DATA_PATH = DATA_DIR / "malicious_phish.csv"
+RAW_DATA_PATH = BASE_DIR / "malicious_phish.csv"
 
 # Model paths
 MODELS_DIR = BASE_DIR / "models"
@@ -43,12 +42,14 @@ LABEL_MAP = {
     'malware': 3
 }
 
+REVERSE_LABEL_MAP = {v: k for k, v in LABEL_MAP.items()}
+
 # Model Configuration
 MODELS_CONFIG = [
-    {"name": "DecisionTree", "class": DecisionTreeClassifier, "params": {"random_state": 42}},
-    {"name": "RandomForest", "class": RandomForestClassifier, "params": {"n_estimators": 100, "random_state": 42}},
+    {"name": "DecisionTree", "class": DecisionTreeClassifier, "params": {"random_state": 42, "class_weight": "balanced"}},
+    {"name": "RandomForest", "class": RandomForestClassifier, "params": {"n_estimators": 100, "random_state": 42, "class_weight": "balanced"}},
     {"name": "AdaBoost", "class": AdaBoostClassifier, "params": {"random_state": 42}},
     {"name": "KNeighbors", "class": KNeighborsClassifier, "params": {}},
-    {"name": "ExtraTrees", "class": ExtraTreesClassifier, "params": {"random_state": 42}},
+    {"name": "ExtraTrees", "class": ExtraTreesClassifier, "params": {"random_state": 42, "class_weight": "balanced"}},
     {"name": "GaussianNB", "class": GaussianNB, "params": {}}
 ]

@@ -16,4 +16,6 @@ whois
 wordcloud
 gensim
 nltk
-hmmlearn
+
+dvc[s3]
+flake8

@@ -1,0 +1,5 @@
+outs:
+- md5: 216d9051cfd43b75dd031a10fb4929d8
+  size: 45664439
+  hash: md5
+  path: malicious_phish.csv

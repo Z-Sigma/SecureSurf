@@ -5,6 +5,7 @@ import mlflow.sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 import os
+import joblib
 from src.config import FEATURES, TARGET, MLFLOW_TRACKING_URI, MODELS_CONFIG, S3_ENDPOINT_URL, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
 
 # Set environment variables for MLflow/S3
@@ -60,8 +61,27 @@ def train_and_log_models(df: pd.DataFrame):
             mlflow.log_params(model_params)
             mlflow.log_metrics(metrics)
             
-            # Log model
-            mlflow.sklearn.log_model(model, f"{model_name.lower()}_model")
+            # Log model (Robust method: joblib + log_artifact)
+            model_filename = f"{model_name.lower()}_model.joblib"
+            joblib.dump(model, model_filename)
+            mlflow.log_artifact(model_filename)
+            os.remove(model_filename)
+            logger.info(f"Successfully logged model artifact: {model_filename}")
+            
+            # Feature Importance (if available)
+            if hasattr(model, 'feature_importances_'):
+                logger.info(f"Logging feature importance for {model_name}...")
+                importances = pd.Series(model.feature_importances_, index=FEATURES).sort_values(ascending=False)
+                # Log top 5 as tags for quick view
+                for feature, val in importances.head(5).items():
+                    mlflow.set_tag(f"top_feature_{feature}", f"{val:.4f}")
+                
+                # Log full list as a CSV artifact
+                importance_df = importances.reset_index()
+                importance_df.columns = ['feature', 'importance']
+                importance_df.to_csv("feature_importance.csv", index=False)
+                mlflow.log_artifact("feature_importance.csv")
+                os.remove("feature_importance.csv")
             
             results.append({"model": model_name, "accuracy": metrics["accuracy"]})
 

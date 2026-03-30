@@ -6,13 +6,16 @@ __pycache__/
 .ipynb_checkpoints/
 .pytest_cache/
 
-# Data and Artifacts (DVC managed or local)
-malicious_phish.csv/
-mlruns/
-models/
-exports/
-artifacts/
-.dvc/
+# Data and Artifacts (DVC managed)
+# We ignore the actual data but KEEP the .dvc configuration and metadata
+malicious_phish.csv
+/.dvc/cache/
+/.dvc/tmp/
+/mlruns/
+/models/
+/exports/
+/artifacts/
+/logs/
 *.sav
 *.pkl
 
