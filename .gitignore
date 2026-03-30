@@ -1,27 +1,25 @@
-# Virtual Environment
-myenv/
+# Python/Data Science gitignore
 venv/
 .env
-
-# Python
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+.ipynb_checkpoints/
 .pytest_cache/
 
-# Logging
-logs/
-*.log
-
-# Data (DVC tracks these)
-/data/
-/delivery_data/
-!/delivery_data.dvc
-
-# MLflow
+# Data and Artifacts (DVC managed or local)
+malicious_phish.csv/
 mlruns/
-mlartifacts/
+models/
+exports/
+artifacts/
+.dvc/
+*.sav
+*.pkl
 
-# OS
+# IDEs
+.vscode/
+.idea/
 .DS_Store
-Thumbs.db
+
+#ipynb file
+malicious-url-detection.ipynb

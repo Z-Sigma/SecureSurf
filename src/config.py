@@ -1,25 +1,48 @@
 import os
+from pathlib import Path
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, ExtraTreesClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
 
 # Base directory
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Data Directories
-DATA_DIR = os.path.join(BASE_DIR, "delivery_data")
+# Data paths
+DATA_DIR = BASE_DIR / "malicious_phish.csv"
+RAW_DATA_PATH = DATA_DIR / "malicious_phish.csv"
 
-# Data File Paths
-CUSTOMERS_DATA = os.path.join(DATA_DIR, "olist_customers_dataset.csv")
-GEOLOCATION_DATA = os.path.join(DATA_DIR, "olist_geolocation_dataset.csv")
-ORDER_ITEMS_DATA = os.path.join(DATA_DIR, "olist_order_items_dataset.csv")
-ORDER_PAYMENTS_DATA = os.path.join(DATA_DIR, "olist_order_payments_dataset.csv")
-ORDER_REVIEWS_DATA = os.path.join(DATA_DIR, "olist_order_reviews_dataset.csv")
-ORDERS_DATA = os.path.join(DATA_DIR, "olist_orders_dataset.csv")
-PRODUCTS_DATA = os.path.join(DATA_DIR, "olist_products_dataset.csv")
-SELLERS_DATA = os.path.join(DATA_DIR, "olist_sellers_dataset.csv")
-CATEGORY_TRANSLATION_DATA = os.path.join(DATA_DIR, "product_category_name_translation.csv")
+# Model paths
+MODELS_DIR = BASE_DIR / "models"
+os.makedirs(MODELS_DIR, exist_ok=True)
 
-# MLflow Settings
+# MLflow Config
 MLFLOW_TRACKING_URI = "http://localhost:5000"
-EXPERIMENT_NAME = "Delivery_Delay_Prediction"
 
-# Feature Settings
-TARGET_COLUMN = "delivery_delay"  # Defined later in feature engineering
+# Feature lists
+FEATURES = [
+    'url_len', 'letters_count', 'digits_count', 'special_chars_count', 
+    'shortened', 'abnormal_url', 'secure_http', 'have_ip',
+    'count_dot', 'count_at', 'count_dir', 'count_embed', 
+    'count_percent', 'count_equal', 'count_hyphen', 'count_tld'
+]
+
+TARGET = 'url_type'
+
+# Label Mapping
+LABEL_MAP = {
+    'benign': 0,
+    'defacement': 1,
+    'phishing': 2,
+    'malware': 3
+}
+
+# Model Configuration
+MODELS_CONFIG = [
+    {"name": "DecisionTree", "class": DecisionTreeClassifier, "params": {"random_state": 42}},
+    {"name": "RandomForest", "class": RandomForestClassifier, "params": {"n_estimators": 100, "random_state": 42}},
+    {"name": "AdaBoost", "class": AdaBoostClassifier, "params": {"random_state": 42}},
+    {"name": "KNeighbors", "class": KNeighborsClassifier, "params": {}},
+    {"name": "ExtraTrees", "class": ExtraTreesClassifier, "params": {"random_state": 42}},
+    {"name": "GaussianNB", "class": GaussianNB, "params": {}}
+]
