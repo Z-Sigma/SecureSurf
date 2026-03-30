@@ -4,10 +4,9 @@ import pandas as pd
 from urllib.parse import urlparse
 from tld import get_tld
 import ipaddress
-import logging
+from src.logger import get_logger
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 def get_url_length(url):
     return len(str(url))

@@ -19,6 +19,12 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 # MLflow Config
 MLFLOW_TRACKING_URI = "http://localhost:5000"
 
+# S3 / MinIO Config (for MLflow Artifacts)
+S3_ENDPOINT_URL = "http://localhost:9000"
+AWS_ACCESS_KEY_ID = "minio"
+AWS_SECRET_ACCESS_KEY = "minio123"
+AWS_DEFAULT_REGION = "us-east-1"
+
 # Feature lists
 FEATURES = [
     'url_len', 'letters_count', 'digits_count', 'special_chars_count', 

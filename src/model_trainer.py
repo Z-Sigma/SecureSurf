@@ -1,13 +1,19 @@
 import pandas as pd
-import logging
+from src.logger import get_logger
 import mlflow
 import mlflow.sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
-from src.config import FEATURES, TARGET, MLFLOW_TRACKING_URI, MODELS_CONFIG
+import os
+from src.config import FEATURES, TARGET, MLFLOW_TRACKING_URI, MODELS_CONFIG, S3_ENDPOINT_URL, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Set environment variables for MLflow/S3
+os.environ["MLFLOW_S3_ENDPOINT_URL"] = S3_ENDPOINT_URL
+os.environ["AWS_ACCESS_KEY_ID"] = AWS_ACCESS_KEY_ID
+os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_SECRET_ACCESS_KEY
+os.environ["AWS_DEFAULT_REGION"] = AWS_DEFAULT_REGION
+
+logger = get_logger(__name__)
 
 def train_and_log_models(df: pd.DataFrame):
     """

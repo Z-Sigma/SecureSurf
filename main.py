@@ -1,11 +1,10 @@
-import logging
 from src.data_ingestion import load_data
 from src.preprocessing import clean_data
 from src.feature_engineering import extract_features
 from src.model_trainer import train_and_log_models
+from src.logger import get_logger
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 def run_pipeline():
     """
